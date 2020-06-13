@@ -8,7 +8,7 @@ pyAWM is a module which automates to send whatsapp messages, media, files at a g
 
   - Send Messages to multiple contacts multiple times.
   - Send Multiple files to multiple contacts.
-  - Schedule to send messages ot media.
+  - Schedule to send messages or media.
 
 
 
