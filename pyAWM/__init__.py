@@ -159,6 +159,7 @@ def add_driver_path(path):
 		options = webdriver.ChromeOptions();
 		options.add_argument('--user-data-dir=/pyAWM_User_Data')
 		driver = webdriver.Chrome(driver_path, options=options)
+		driver.close()
 	except:
 		print("Close all windows of Chrome. Check path of the driver.")
 
