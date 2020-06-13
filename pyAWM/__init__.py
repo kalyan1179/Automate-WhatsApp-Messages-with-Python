@@ -31,13 +31,18 @@ def send_whatsapp_msg(name_list , msg ,count, time_hour, time_min):
 		exit(0)
 	time.sleep(lefttm-60)
 	options = webdriver.ChromeOptions();
-	options.add_argument('--user-data-dir=./User_Data')
+	options.add_argument('--user-data-dir=/pyAWM_User_Data')
 	driver = webdriver.Chrome(r'F:/chromedriver_win32/chromedriver.exe', options=options)
 	driver.get('https://web.whatsapp.com/')
-	wait = WebDriverWait(driver = driver, timeout = 300)
-	time.sleep(10)
+	wait = WebDriverWait(driver = driver, timeout = 300).until(EC.presence_of_element_located((By.ID, 'pane-side')))
+	time.sleep(59)
 	for name in name_list:
-		user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
+		try:
+			user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
+		except:
+			print("{} not found".format(name)," try again :(")
+			continue
+		time.sleep(1)
 		user.click()
 		wait = WebDriverWait(driver = driver, timeout = 600)
 		msg_box = driver.find_element_by_xpath('//div[@contenteditable="true"][@data-tab="1"]')
@@ -45,7 +50,7 @@ def send_whatsapp_msg(name_list , msg ,count, time_hour, time_min):
 		        msg_box.send_keys(msg)
 		        msg_box.send_keys(Keys.ENTER)
 		wait = WebDriverWait(driver = driver, timeout = 600)
-		time.sleep(1)
+		time.sleep(2)
 	time.sleep(media_loading_time)
 	driver.close()
 	del driver
@@ -71,12 +76,12 @@ def send_whatsapp_files(name_list , files_list , time_hour, time_min):
 		exit(0)
 	time.sleep(lefttm-60)
 	options = webdriver.ChromeOptions();
-	options.add_argument('--user-data-dir=./User_Data')
+	options.add_argument('--user-data-dir=/pyAWM_User_Data')
 	driver = webdriver.Chrome(r'F:/chromedriver_win32/chromedriver.exe', options=options)
 	driver.get('https://web.whatsapp.com/')
-	wait = WebDriverWait(driver = driver, timeout = 600)
-	time.sleep(20)
-	print("You have 1 minute to upload all files. You can always change by call function set_media_loading_time()")
+	wait = WebDriverWait(driver = driver, timeout = 600).until(EC.presence_of_element_located((By.ID, 'pane-side')))
+	time.sleep(58)
+	print("You have 1 minute to upload all files. You can always change by call function set_media_loading_time(secs)")
 	for name in name_list:
 		try: 
 			user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
@@ -93,6 +98,7 @@ def send_whatsapp_files(name_list , files_list , time_hour, time_min):
 			attachment.send_keys(path)
 			time.sleep(2)
 			driver.find_element_by_xpath('//span[@data-icon="send"]').click()	
+		time.sleep(1)
 	time.sleep(media_loading_time)
 	driver.close()
 	del driver
@@ -109,19 +115,19 @@ def send_whatsapp_media(name_list , files_list , msgs, time_hour, time_min):
 	currsec = curr.tm_sec
 	currtotsec = (currhr*3600)+(currmin*60)+(currsec)
 	lefttm = callsec-currtotsec
-	print("Your message will be sent in", lefttm,"secs")
 	if lefttm <= 0:
 		lefttm = (3600*24)+lefttm
 	if lefttm < 60:
 		print("You must call before one minute as web.whatsapp.com takes some time to load")
 		exit(0)
+	print("Your message will be sent in", lefttm,"secs")
 	time.sleep(lefttm-60)
 	options = webdriver.ChromeOptions();
-	options.add_argument('--user-data-dir=./User_Data')
+	options.add_argument('--user-data-dir=/pyAWM_User_Data')
 	driver = webdriver.Chrome(r'F:/chromedriver_win32/chromedriver.exe', options=options)
 	driver.get('https://web.whatsapp.com/')
 	wait = WebDriverWait(driver = driver, timeout = 600).until(EC.presence_of_element_located((By.ID, 'pane-side')))
-	time.sleep(20)
+	time.sleep(56)
 	print("You have 1 minute to upload all files. You can always change by call function set_media_loading_time()")
 	for name in name_list:
 		try: 
@@ -136,28 +142,29 @@ def send_whatsapp_media(name_list , files_list , msgs, time_hour, time_min):
 		attachment = driver.find_element_by_xpath('//input[@accept="image/*,video/mp4,video/3gpp,video/quicktime"]')
 		for path in files_list:
 			attachment.send_keys(path)
-			time.sleep(5)
+			time.sleep(2)
 			element = driver.find_element_by_xpath('//div[@contenteditable="true"][@data-tab="1"]')
 			element.send_keys(msgs)
 			time.sleep(2)
-			driver.find_element_by_xpath('//span[@data-icon="send"]').click()		
+			driver.find_element_by_xpath('//span[@data-icon="send"]').click()
+		time.sleep(2)		
 	time.sleep(media_loading_time)
 	driver.close()
 	del driver
 
-def add_path_to_driver(path):
+def add_driver_path(path):
 	global driver_path
 	driver_path = path
 	try:
 		options = webdriver.ChromeOptions();
-		options.add_argument('--user-data-dir=./User_Data')
+		options.add_argument('--user-data-dir=/pyAWM_User_Data')
 		driver = webdriver.Chrome(driver_path, options=options)
 	except:
 		print("Close all windows of Chrome. Check path of the driver.")
 
 def scan_QR_Code():
 	options = webdriver.ChromeOptions();
-	options.add_argument('--user-data-dir=./User_Data')
+	options.add_argument('--user-data-dir=/pyAWM_User_Data')
 	driver = webdriver.Chrome(driver_path, options=options)
 	driver.get("https://web.whatsapp.com")
 	while True:
@@ -170,7 +177,7 @@ def scan_QR_Code():
 			pass
 
 def users_manual():
-	print("Steps to use this module: \n")
+	print("Steps for how to use this module: \n")
 	print("Step 1: Download Google Chrome and see if it is working fine. If that works fine, go to step 2.\n")
 	print("Step 2: Download Chrome Driver(latest and stable version) from https://chromedriver.chromium.org/ \n")
 	print("Step 3: Extract the the downloaded file and copy the path of chromedriver\nExample: .../chromedriver.exe \n")
