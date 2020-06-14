@@ -1,6 +1,6 @@
 # pyAWM
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+
 
 pyAWM is a module which automates to send whatsapp messages, media, files at a given time.
 
