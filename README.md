@@ -28,7 +28,7 @@ Install Chrome Driver:
 ```sh
 $ sudo apt install chromium-chromedriver
 ```
->Steps to use pyAWM module: <br/>
+Steps to use pyAWM module: <br/>
 >Step 1: Download Google Chrome and see if it is working fine. If that works fine, go to step 2. <br/>
 Step 2: Download Chrome Driver(latest and stable version) from https://chromedriver.chromium.org/ <br/>
 Step 3: Extract the the downloaded file and copy the path of chromedriver\nExample: .../chromedriver.exe  <br/>
